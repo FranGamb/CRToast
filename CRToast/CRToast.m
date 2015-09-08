@@ -232,6 +232,12 @@ NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorota
 NSString *const kCRToastIdentifierKey                       = @"kCRToastIdentifierKey";
 NSString *const kCRToastCaptureDefaultWindowKey             = @"kCRToastCaptureDefaultWindowKey";
 
+//  custom properties
+NSString *const kCRToastImageURLStringKey                   = @"kCRToastImageURLStringKey";
+NSString *const kCRToastImagePlaceholderKey                 = @"kCRToastImagePlaceholderKey";
+NSString *const kCRToastCircularImageKey                    = @"kCRToastCircularImageKey";
+NSString *const kCRToastImageBackgroundColorKey             = @"kCRToastImageBackgroundColorKey";
+
 #pragma mark - Option Defaults
 
 static CRToastType                   kCRNotificationTypeDefault             = CRToastTypeStatusBar;
@@ -283,6 +289,11 @@ static CRToastAccessoryViewAlignment kCRActivityIndicatorAlignmentDefault   = CR
 
 static NSArray  *                    kCRInteractionResponders               = nil;
 static BOOL                          kCRForceUserInteractionDefault         = NO;
+
+static NSString *                    kCRImageURLStringDefault               = nil;
+static UIImage *                     kCRImagePlaceholderDefault             = nil;
+static BOOL                          kCRCircularImageDefault                = YES;
+static UIColor *                     kCRImageBackgroundColorDefault         = nil;
 
 static BOOL                          kCRAutoRotateDefault                   = YES;
 
@@ -363,7 +374,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
                                 
-                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class])
+                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class]),
+
+                                kCRToastImageURLStringKey                   : NSStringFromClass([NSString class]),
+                                kCRToastImagePlaceholderKey                 : NSStringFromClass([UIImage class]),
+                                kCRToastCircularImageKey                    : NSStringFromClass([NSNumber class]),
+                                kCRToastImageBackgroundColorKey             : NSStringFromClass([UIColor class])
                                 };
     }
 }
@@ -432,6 +448,11 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                = defaultOptions[kCRToastInteractionRespondersKey];
     if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault          = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
+    
+    if (defaultOptions[kCRToastImageURLStringKey])                  kCRImageURLStringDefault                = defaultOptions[kCRToastImageURLStringKey];
+    if (defaultOptions[kCRToastImagePlaceholderKey])                kCRImagePlaceholderDefault              = defaultOptions[kCRToastImagePlaceholderKey];
+    if (defaultOptions[kCRToastCircularImageKey])                   kCRCircularImageDefault                 = [defaultOptions[kCRToastCircularImageKey] boolValue];
+    if (defaultOptions[kCRToastImageBackgroundColorKey])            kCRImageBackgroundColorDefault          = defaultOptions[kCRToastImageBackgroundColorKey];
         
     if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                    = [defaultOptions[kCRToastAutorotateKey] boolValue];
 
@@ -730,6 +751,26 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (BOOL)forceUserInteraction {
     return _options[kCRToastForceUserInteractionKey] ? [_options[kCRToastForceUserInteractionKey] boolValue] : kCRForceUserInteractionDefault;
+}
+
+- (NSString *)imageURLString
+{
+    return _options[kCRToastImageURLStringKey] ?: kCRImageURLStringDefault;
+}
+
+- (UIImage *)imagePlaceholder
+{
+    return _options[kCRToastImagePlaceholderKey] ?: kCRImagePlaceholderDefault;
+}
+
+- (BOOL)circularImage
+{
+    return [_options[kCRToastCircularImageKey] boolValue] ?: kCRCircularImageDefault;
+}
+
+- (UIColor *)imageBackgroundColor
+{
+    return _options[kCRToastImageBackgroundColorKey] ?: kCRImageBackgroundColorDefault;
 }
 
 - (BOOL)autorotate {

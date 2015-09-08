@@ -365,6 +365,13 @@ extern NSString *const kCRToastIdentifierKey;
  */
 extern NSString *const kCRToastCaptureDefaultWindowKey;
 
+//  custom properties
+extern NSString *const kCRToastImageURLStringKey;
+extern NSString *const kCRToastImagePlaceholderKey;
+extern NSString *const kCRToastCircularImageKey;
+extern NSString *const kCRToastImageBackgroundColorKey;
+
+
 #pragma mark - CRToast Interface
 @interface CRToast : NSObject <UIGestureRecognizerDelegate>
 
@@ -442,6 +449,10 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
 @property (nonatomic, readonly) BOOL forceUserInteraction;
+@property (nonatomic, readonly) NSString *imageURLString;
+@property (nonatomic, readonly) UIImage *placeholderImage;
+@property (nonatomic, readonly) BOOL circularImage;
+@property (nonatomic, readonly) UIColor *imageBackgroundColor;
 
 @property (nonatomic, readonly) CGVector inGravityDirection;
 @property (nonatomic, readonly) CGVector outGravityDirection;

@@ -6,6 +6,7 @@
 #import "CRToastView.h"
 #import "CRToast.h"
 #import "CRToastLayoutHelpers.h"
+#import <UIKit+AFNetworking.h>
 
 @interface CRToastView ()
 @end
@@ -145,6 +146,8 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                       imageSize.height == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame));
+    self.imageView.frame = CGRectInset(self.imageView.frame, 5.0, 5.0);
+    self.imageView.layer.cornerRadius = self.toast.circularImage ? self.imageView.bounds.size.width / 2.0 : 0.0;
     
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);
     CGFloat x = CRContentXOffsetForViewAlignmentAndWidth(self.toast.imageAlignment, imageXOffset, imageWidth, preferredPadding);
@@ -298,6 +301,15 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
         if (!_backgroundView.superview) {
             [self insertSubview:_backgroundView atIndex:0];
         }
+    }
+    
+//    self.imageView.layer.cornerRadius = toast.circularImage ? self.imageView.bounds.size.width / 2.0 : 0.0;
+    self.imageView.clipsToBounds = YES;
+    if (toast.imageBackgroundColor) {
+        self.imageView.backgroundColor = toast.imageBackgroundColor;
+    }
+    if (toast.imageURLString) {
+        [self.imageView setImageWithURL:[NSURL URLWithString:toast.imageURLString] placeholderImage:toast.placeholderImage];
     }
 }
 
